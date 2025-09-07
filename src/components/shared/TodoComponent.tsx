@@ -5,8 +5,9 @@ interface TodoProps { todo: Todo }
 
 const TodoComponent = ({ todo }: TodoProps) => {
   return (
-    <div className="w-full flex items-center-safe justify-between bg-white py-3 px-20 rounded-2xl">
-      {todo.title}</div>
+    <span className="text-center font-bold uppercase">
+      {todo.title}
+    </span>
   )
 }
 

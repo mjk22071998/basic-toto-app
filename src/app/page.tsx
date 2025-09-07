@@ -1,4 +1,5 @@
 import AddTodo from "@/components/shared/AddTodoComponent"
+import ChangeTodoComponent from "@/components/shared/ChangeTodoComponent"
 import TodoComponent from "@/components/shared/TodoComponent"
 import { prisma } from "@/utils/prisma"
 
@@ -12,7 +13,6 @@ async function fetchData() {
 
 const Home = async () => {
   const todos = await fetchData()
-  console.log(todos)
   return (
     <div className="w-screen flex flex-col items-center-safe justify-center-safe">
       <span className="text-3xl font-extrabold uppercase"> My Todo App</span>
@@ -25,7 +25,10 @@ const Home = async () => {
         <div className="w-full flex flex-col items-center-safe mt-10 gap-5">
           {todos.map((todo) => (
             <div key={todo.id} className="w-full flex items-center-safe justify-center-safe">
-              <TodoComponent todo={todo}/>
+              <div className="w-full flex items-center-safe justify-between bg-white py-3 px-20 rounded-2xl">
+                <ChangeTodoComponent todo={todo} />
+                <TodoComponent todo={todo} />
+              </div>
             </div>
           ))}
           {todos.length === 0 && (

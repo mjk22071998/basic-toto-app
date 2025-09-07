@@ -1,15 +1,20 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { addTodo } from "../../app/actions/todoActions"
 import toast, { Toaster } from "react-hot-toast"
 import Form from "../UI/FormComponent"
 import Input from "../UI/InputComponent"
 import Button from "../UI/ButtonComponent"
 
-
 const AddTodo = () => {
   const [loading, setLoading] = useState(false)
+  const loadingRef = useRef(loading)
+
+  useEffect(() => {
+    loadingRef.current = loading
+    console.log("loading changed:", loading) // ✅ logs correctly
+  }, [loading])
 
   const handleSubmit = async (formData: FormData) => {
     setLoading(true)
@@ -23,6 +28,9 @@ const AddTodo = () => {
     }
 
     setLoading(false)
+
+    // if you need the latest value here
+    console.log("loading inside async:", loadingRef.current)
   }
 
   return (
@@ -37,10 +45,10 @@ const AddTodo = () => {
         <div className="flex justify-between space-x-4">
           <Input name="todo" type="text" placeholder="Add Todo..." />
           <Button
-            actionButton={true}
+            actionButton={false}
             text={loading ? "Adding..." : "Add"}
             type="submit"
-            onClick={() => {}}
+            disabled={loading}
           />
         </div>
       </Form>
